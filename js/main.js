@@ -11,6 +11,12 @@ let getMovie = () => {
         result.innerHTML = `<h3 class='msg'>Please enter a movie name</h3>`
     } else {
         fetch(url).then((resp) => resp.json()).then((data) => {
+            let urlWindow = new URL(window.location.href)
+            let params = new URLSearchParams(url.search)
+            params.append('t', movieName)
+            urlWindow.search = params.toString()
+            window.history.pushState({}, '', urlWindow)
+
             if (data.Response == 'True') {
                 result.innerHTML = `
                 <div class="result__main">
